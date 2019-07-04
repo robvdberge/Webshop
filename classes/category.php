@@ -30,4 +30,16 @@ class Category{
             return $msg;
         }
     }
+
+    public function getAllCats(){
+        $query = "SELECT * FROM tbl_category ORDER BY catId DESC";
+        $allCats = $this->db->select($query);
+        return $allCats;
+    }
+
+    public function getCatById($id){
+        $query = "SELECT * FROM tbl_category WHERE catId = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 }
