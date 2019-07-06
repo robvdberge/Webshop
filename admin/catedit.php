@@ -13,7 +13,7 @@ $cat = new Category;
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
     $catName = stripslashes( $_POST['catName']);
 
-    $insertCat = $cat->catInsert($catName);
+    $updateCat = $cat->catUpdate($catName, $id);
 }
 
 $getCat = $cat->getCatById($id);
@@ -26,7 +26,7 @@ if ( $getCat ){
             <div class="box round first grid">
                 <h2>Edit Category</h2>
                <div class="block copyblock">
-               <?php if (isset($insertCat)){echo $insertCat;} ?> 
+               <?php if (isset($updateCat)){echo $updateCat;} ?> 
                  <form action=" " method="post">
                     <table class="form">					
                         <tr>
