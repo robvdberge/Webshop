@@ -1,7 +1,7 @@
 <?php 
 include 'inc/header.php';
 include 'inc/sidebar.php';
-include '../classes/brand.php'; 
+include '../classes/Brand.php'; 
 
 $brand = new Brand;
 if (isset($_GET['brandDel'])) {

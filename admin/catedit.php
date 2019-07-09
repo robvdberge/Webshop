@@ -1,7 +1,7 @@
 <?php 
 include 'inc/header.php';
 include 'inc/sidebar.php';
-include '../classes/category.php'; 
+include '../classes/Category.php'; 
 
 if ( !isset($_GET['catId']) || $_GET['catId'] == NULL ){
     echo '<script>window.location = "catlist.php" </script>';

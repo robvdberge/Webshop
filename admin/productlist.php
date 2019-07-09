@@ -1,140 +1,71 @@
-﻿<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
+﻿<?php 
+include 'inc/header.php';
+include 'inc/sidebar.php';
+include_once '../classes/Product.php';
+include_once '../helpers/Format.php';
+
+$pd = new Product;
+$fm = new Format;
+
+if (isset($_GET['prodDel'])) {
+	$id = $_GET['prodDel'];
+	$prodDel = $pd->prodDelById($id);
+}
+
+?>
 <div class="grid_10">
     <div class="box round first grid">
-        <h2>Post List</h2>
-        <div class="block">  
+        <h2>Products List</h2>
+        <div class="block"> 
+		<?php if (isset($prodDel)){echo $prodDel;}; ?> 
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
-					<th>Post Title</th>
-					<th>Description</th>
+					<th>Nr</th>
+					<th>Product name</th>
 					<th>Category</th>
+					<th>Brand</th>
+					<th>Description</th>
+					<th>price</th>
 					<th>Image</th>
+					<th>Type</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
+			<?php
+				$getPd = $pd->getAllProducts();
+				if ($getPd) {
+					$i = 0;
+					while ( $result = $getPd->fetch_assoc() ){
+						$i++;
+						$pName = $fm->textShorten($result['productName'],20);
+						$catId = $result['catName'];
+						$brand = $result['brandName'];
+						$body = $fm->textShorten($result['body'],30); // shorten the description
+						$image = $result['image'];
+						$price = $result['price'];
+						$type = $result['type'];
+
+			?>
 				<tr class="odd gradeX">
-					<td>Trident</td>
-					<td>Internet Explorer 4.0</td>
-					<td>Win 95+</td>
-					<td class="center"> 4</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
+					<td><?php echo $i; ?></td>
+					<td><?php echo $pName; ?></td>
+					<td><?php echo $catId; ?></td>
+					<td><?php echo $brand; ?></td>
+					<td><?php echo $body; ?></td>
+					<td><?php echo $price; ?></td>
+					<td><img src="<?php echo $image; ?>" height="40px" width="60px"></td>
+					<td><?php 
+					if ( $type == 0 ){
+						echo "Featured";
+					} else { 
+						echo "General";
+					}
+						?></td>
+					<td><a href="productEdit?pId=<?php echo $result['productId'];?>">Edit</a> || <a onclick="return confirm('Weet je het zeker?')" href="?prodDel=<?php echo $result['productId'];?>">Delete</a></td>
 				</tr>
-				<tr class="even gradeC">
-					<td>Trident</td>
-					<td>Internet Explorer 5.0</td>
-					<td>Win 95+</td>
-					<td class="center">5</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="odd gradeA">
-					<td>Trident</td>
-					<td>Internet Explorer 5.5</td>
-					<td>Win 95+</td>
-					<td class="center">5.5</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="even gradeA">
-					<td>Trident</td>
-					<td>Internet Explorer 6</td>
-					<td>Win 98+</td>
-					<td class="center">6</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="odd gradeA">
-					<td>Trident</td>
-					<td>Internet Explorer 7</td>
-					<td>Win XP SP2+</td>
-					<td class="center">7</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="even gradeA">
-					<td>Trident</td>
-					<td>AOL browser (AOL desktop)</td>
-					<td>Win XP</td>
-					<td class="center">6</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeA">
-					<td>Gecko</td>
-					<td>Firefox 1.0</td>
-					<td>Win 98+ / OSX.2+</td>
-					<td class="center">1.7</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeA">
-					<td>Gecko</td>
-					<td>Firefox 1.5</td>
-					<td>Win 98+ / OSX.2+</td>
-					<td class="center">1.8</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeA">
-					<td>Gecko</td>
-					<td>Firefox 2.0</td>
-					<td>Win 98+ / OSX.2+</td>
-					<td class="center">1.8</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeA">
-					<td>Gecko</td>
-					<td>Firefox 3.0</td>
-					<td>Win 2k+ / OSX.3+</td>
-					<td class="center">1.9</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeA">
-					<td>Gecko</td>
-					<td>Camino 1.0</td>
-					<td>OSX.2+</td>
-					<td class="center">1.8</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				
-				<tr class="gradeX">
-					<td>Misc</td>
-					<td>Dillo 0.8</td>
-					<td>Embedded devices</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeX">
-					<td>Misc</td>
-					<td>Links</td>
-					<td>Text only</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeX">
-					<td>Misc</td>
-					<td>Lynx</td>
-					<td>Text only</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeC">
-					<td>Misc</td>
-					<td>IE Mobile</td>
-					<td>Windows Mobile 6</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeC">
-					<td>Misc</td>
-					<td>PSP browser</td>
-					<td>PSP</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
-				<tr class="gradeU">
-					<td>Other browsers</td>
-					<td>All others</td>
-					<td>-</td>
-					<td class="center">-</td>
-					<td><a href="">Edit</a> || <a href="">Delete</a></td>
-				</tr>
+					<?php }} ?>
 			</tbody>
 		</table>
 

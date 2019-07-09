@@ -1,7 +1,7 @@
 <?php 
 include 'inc/header.php';
 include 'inc/sidebar.php';
-include '../classes/brand.php'; 
+include '../classes/Brand.php'; 
 
 if ( !isset($_GET['brandId']) || $_GET['brandId'] == NULL ){
     echo '<script>window.location = "brandlist.php" </script>';

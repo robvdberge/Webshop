@@ -1,21 +1,33 @@
-﻿<?php 
+<?php 
 include 'inc/header.php';
 include 'inc/sidebar.php';
-include_once '../classes/Brand.php';
-include_once '../classes/Category.php';
-include_once '../classes/Product.php';
+include_once '../classes/brand.php';
+include_once '../classes/category.php';
+include_once '../classes/product.php'; 
+
+if ( !isset($_GET['pId']) || $_GET['pId'] == NULL ){
+    echo '<script>window.location = "productlist.php" </script>';
+} else{
+    $id = $_GET['pId'];
+}
 
 $pd = new Product;
+$fm = new Format;
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
-    $insertProd = $pd->ProductInsert($_POST, $_FILES);
+    $updateProd = $pd->ProductUpdate($_POST, $_FILES, $id);
 }
+$getProd = $pd->getProdById($id);
+if ( $getProd ){
+    while ( $value = $getProd->fetch_assoc() ){
+
+
 ?>
 <div class="grid_10">
     <div class="box round first grid">
-        <h2>Add New Product</h2>
+        <h2>Edit a Product</h2>
         <div class="block">               
          <form action="" method="post" enctype="multipart/form-data">
-         <?php if (isset($insertProd)){echo $insertProd;} ?> 
+         <?php if (isset($updateProd)){echo $updateProd;}?> 
             <table class="form">
                
                 <tr>
@@ -23,7 +35,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Name</label>
                     </td>
                     <td>
-                        <input type="text" name="productName" placeholder="Enter Product Name..." class="medium" />
+                        <input type="text" name="productName" value="<?php echo $value['productName'];?>" class="medium" />
                     </td>
                 </tr>
 				<tr>
@@ -31,7 +43,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Category</label>
                     </td>
                     <td>
-                        <select id="select" name="catId">
+                    <select id="select" name="catId">
                             <option>Select Category</option>
                             <?php 
                             $cat = new Category;
@@ -39,7 +51,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                             if ($getCats){
                                 while ( $result = $getCats->fetch_assoc() ){ ?>
 
-                                <option value="<?php echo $result['catId'];?>"><?php echo $result['catName']; ?></option>
+                                <option 
+                                <?php 
+                                if ( $value['catId'] == $result['catId']){
+                                    echo 'selected="' . $value['catId'] . '"';
+                                }
+                                ?>
+                                value="<?php echo $result['catId'];?>"><?php echo $result['catName']; ?></option>
 
                             <?php 
                                 }
@@ -52,7 +70,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Brand</label>
                     </td>
                     <td>
-                        <select id="select" name="brandId">
+                        <select id="select" name="brandId" >
                             <option>Select Brand</option>
                             <?php 
                             $brand = new Brand;
@@ -60,7 +78,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                             if ($getBrands){
                                 while ( $result = $getBrands->fetch_assoc() ){ ?>
 
-                                <option value="<?php echo $result['brandId'];?>"><?php echo $result['brandName']; ?></option>
+                                <option 
+                                <?php 
+                                if ( $value['brandId'] == $result['brandId']){
+                                    echo 'selected="' . $value['brandId'] . '"';
+                                }
+                                ?>
+                                value="<?php echo $result['brandId'];?>"><?php echo $result['brandName']; ?></option>
 
                             <?php 
                                 }
@@ -74,7 +98,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Description</label>
                     </td>
                     <td>
-                        <textarea name="body" class="tinymce"></textarea>
+                        <textarea name="body" class="tinymce" ><?php echo $value['body']; ?></textarea>
                     </td>
                 </tr>
 				<tr>
@@ -82,15 +106,16 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Price</label>
                     </td>
                     <td>
-                        <input type="text" name="price" placeholder="Enter Price..." class="medium" />
+                        <input type="text" name="price" value="<?php echo $value['price'];?>" class="medium" />
                     </td>
                 </tr>
             
                 <tr>
                     <td>
-                        <label>Upload Image</label>
+                        <label>Uploaded Image</label>
                     </td>
                     <td>
+                        <img src="<?php echo $value['image']; ?>" height="60px" width="80px">    
                         <input name="image" type="file" />
                     </td>
                 </tr>
@@ -100,10 +125,16 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
                         <label>Product Type</label>
                     </td>
                     <td>
-                        <select id="select" name="type">
+                        <select id="select" name="type" value="<?php echo $value['type'];?>">
                             <option>Select Type</option>
-                            <option value="0">Featured</option>
-                            <option value="1">General</option>
+                            <option <?php 
+                                if ( $value['type'] == 0){
+                                    echo 'selected="' . $value['type'] . '"';
+                                }?> value="0">Featured</option>
+                            <option <?php 
+                                if ( $value['type'] == 1){
+                                    echo 'selected="' . $value['type'] . '"';
+                                }?> value="1">General</option>
                         </select>
                     </td>
                 </tr>
@@ -111,11 +142,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
 				<tr>
                     <td></td>
                     <td>
-                        <input type="submit" name="submit" Value="Save" />
+                        <input type="submit" name="submit" Value="Update" />
                     </td>
                 </tr>
             </table>
             </form>
+            <?php 
+            }} // einde while-loop
+            ?>
         </div>
     </div>
 </div>
@@ -131,5 +165,3 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
 </script>
 <!-- Load TinyMCE -->
 <?php include 'inc/footer.php';?>
-
-

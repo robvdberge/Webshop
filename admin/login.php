@@ -1,4 +1,4 @@
-<?php include '../classes/adminlogin.php'; ?>
+<?php include '../classes/Adminlogin.php'; ?>
 <?php 
 	$al = new AdminLogin();
 	if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
