@@ -1526,6 +1526,17 @@ table.tblone img {
 	color: red;
 	font-size: 18px;
 }
+
+.notFound h2{
+	font-size: 80px;
+	line-height: 130px;
+	text-align: center;
+}
+.notFound h2 span{
+	display: block;
+	color: red;
+	font-size: 150px;
+}
 .success{
 	color:green;
 	font-size: 18px;

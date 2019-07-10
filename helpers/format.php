@@ -4,6 +4,7 @@
 class Format{
 
     public function textShorten($text, $limit = 400){
+        $text = htmlspecialchars_decode($text);
         if ( strlen( $text ) >= $limit ){
         $text = $text . "";
         $text = substr($text, 0, $limit);
@@ -15,7 +16,9 @@ class Format{
     }
 
     public function validate($data){
-        $data = trim(stripcslashes(htmlspecialchars($data)));
+        $data = trim($data);
+        $data = stripcslashes($data);
+        $data = htmlspecialchars($data);
         return $data;
        }
 }
