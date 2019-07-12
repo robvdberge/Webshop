@@ -38,6 +38,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
 						<input type="submit" class="buysubmit" name="submit" value="Add to cart"/>
 					</form>				
 				</div>
+				<?php if (isset($addCart)){echo $addCart;} // geef de melding?> 
 			</div>
 			<div class="product-desc">
 			<h2>Product Details</h2>
@@ -46,26 +47,22 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
 		<?php }} ?>
 				
 	</div>
-				<div class="rightsidebar span_3_of_1">
-					<h2>CATEGORIES</h2>
-					<ul>
-				      <li><a href="productbycat.html">Mobile Phones</a></li>
-				      <li><a href="productbycat.html">Desktop</a></li>
-				      <li><a href="productbycat.html">Laptop</a></li>
-				      <li><a href="productbycat.html">Accessories</a></li>
-				      <li><a href="productbycat.html#">Software</a></li>
-					   <li><a href="productbycat.html">Sports & Fitness</a></li>
-					   <li><a href="productbycat.html">Footwear</a></li>
-					   <li><a href="productbycat.html">Jewellery</a></li>
-					   <li><a href="productbycat.html">Clothing</a></li>
-					   <li><a href="productbycat.html">Home Decor & Kitchen</a></li>
-					   <li><a href="productbycat.html">Beauty & Healthcare</a></li>
-					   <li><a href="productbycat.html">Toys, Kids & Babies</a></li>
-    				</ul>
-    	
- 				</div>
+			<div class="rightsidebar span_3_of_1">
+				<h2>CATEGORIES</h2>
+				<ul>
+					<?php 
+					$getAllCats = $cat->getAllCats();
+					if ( $getAllCats ){
+						while ( $result = $getAllCats->fetch_assoc() ){ ?>
+							<li><a href="productbycat.php?catId=<?php echo $result['catId'];?>"><?php echo $result["catName"];?></a></li>
+							<?php
+					  	}
+					}
+					?>
+				</ul>
+			</div>
  		</div>
  	</div>
-	</div>
+</div>
 
 <?php include './inc/footer.php'; ?>

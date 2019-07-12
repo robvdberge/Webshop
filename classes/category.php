@@ -1,6 +1,6 @@
 <?php
-include_once '../lib/database.php';
-include_once '../helpers/format.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/database.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/format.php';
 // Category class
 class Category{
 
@@ -34,7 +34,7 @@ class Category{
 
     // Read
     public function getAllCats(){
-        $query = "SELECT * FROM tbl_category ORDER BY catId DESC";
+        $query = "SELECT * FROM tbl_category ORDER BY catName ASC";
         $allCats = $this->db->select($query);
         return $allCats;
     }

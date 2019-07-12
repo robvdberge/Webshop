@@ -1,11 +1,13 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/Database.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/Format.php';
+
 /* or this way:
     $filepath = realpath(dirname(__FILE__));
     include_once ($filepath.'/../lib/Database.php');
     include_once ($filepath.'/../helpers/Format.php');
 */
+
 // tbl_product: productId (int),productName (varchar), catId (int), brandId(int), body (varchar),price (float 10,2), image (blob), type (0,1)
 
 // Product Class
@@ -61,7 +63,8 @@ class Product{
     }
 
     // Read
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         $query = "SELECT * 
         FROM tbl_product 
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
@@ -72,7 +75,8 @@ class Product{
         return $result;
     }
 
-    public function getProdById($id){
+    public function getProdById($id)
+    {
         $query = "SELECT * 
         FROM tbl_product 
         WHERE productId = '$id'";
@@ -81,7 +85,19 @@ class Product{
         return $result;
     }
 
-    public function getLatestProd(){
+    public function getProdsByCatId($id)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $query = "SELECT * 
+        FROM tbl_product 
+        WHERE catId = '$id'";
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getLatestProd()
+    {
         $query = "SELECT * 
         FROM tbl_product 
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
@@ -92,12 +108,26 @@ class Product{
         return $result;
     }
 
-    public function getSingleProd($id){
+    public function getSingleProd($id)
+    {
         $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName 
         FROM tbl_product 
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
         LEFT JOIN tbl_brand on tbl_product.brandId = tbl_brand.brandId 
         WHERE productId = '$id'";
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getLatestSingle($brand)
+    {
+        $query = "SELECT tbl_product.*, tbl_brand.brandName 
+        FROM tbl_product  
+        LEFT JOIN tbl_brand on tbl_product.brandId = tbl_brand.brandId 
+        WHERE brandName = '$brand' 
+        ORDER BY productId DESC
+        LIMIT 1";
 
         $result = $this->db->select($query);
         return $result;

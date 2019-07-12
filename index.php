@@ -18,7 +18,7 @@
 			?>
 				<div class="grid_1_of_4 images_1_of_4">
 					 <a href="preview.php?pId=<?php echo $result['productId'];?>">
-					 <img src="<?php echo "admin/" . $result['image']; ?>" alt="" /></a>
+					 <img src="<?php echo "admin/" . $result['image']; ?>" alt="" height="250px" /></a>
 					 <h2><?php echo $result['productName']; ?></h2>
 					 <p><?php echo $fm->textShorten($result['body'],60); ?></p>
 					 <p><span class="price"><?php echo '€' . $result['price']; ?></span></p>

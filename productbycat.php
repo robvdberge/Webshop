@@ -1,75 +1,49 @@
-<?php include './inc/header.php'; ?>
+<?php 
+include './inc/header.php'; 
+if ( !isset($_GET['catId']) ){
+	header('location: 404.php');
+	exit();
+} else {
+	$id = $_GET['catId'];
+}
+?>
 
- <div class="main">
+<div class="main">
     <div class="content">
     	<div class="content_top">
     		<div class="heading">
-    		<h3>Latest from Iphone</h3>
+				<?php  
+					$pageTitle = $cat->getCatById($id);
+					if ( $pageTitle ){
+						while ($result = $pageTitle->fetch_assoc()){
+				?>
+    			<h3>Latest from <?php echo $result['catName'];?></h3>
+				<?php } }?>
     		</div>
     		<div class="clear"></div>
     	</div>
-	      <div class="section group">
-				<div class="grid_1_of_4 images_1_of_4">
-					 <a href="preview-3.html"><img src="images/feature-pic1.png" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$505.22</span></p>
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview-2.html"><img src="images/feature-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$620.87</span></p> 
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview-4.html"><img src="images/feature-pic3.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$220.97</span></p>
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<img src="images/feature-pic4.png" alt="" />
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$415.54</span></p> 
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				
-				
-				<div class="grid_1_of_4 images_1_of_4" style="margin-left:0">
-					 <a href="preview-3.html"><img src="images/new-pic1.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$403.66</span></p>
-				    
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview-4.html"><img src="images/new-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$621.75</span></p>
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview-2.html"><img src="images/feature-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$428.02</span></p>
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-				 <img src="images/new-pic3.jpg" alt="" />
-					 <h2>Lorem Ipsum is simply </h2>					 
-					 <p><span class="price">$457.88</span></p>   
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
-				</div>
+	    <div class="section group">
+			<?php
+				$getProds = $pd->getProdsByCatId($id);
+				if ( $getProds ){
+					while ( $result = $getProds->fetch_assoc() ){
+			?>
+			<div class="grid_1_of_4 images_1_of_4">
+				<a href="preview.php?pId=<?php echo $result['productId'];?>"><img src="<?php echo "admin/" . $result['image'];?>" alt="" /></a>
+				<h2><?php echo $fm->textShorten($result['productName'],20);?></h2>
+				<p><?php echo html_entity_decode($fm->textShorten($result['body'],70))?></p>
+				<p><span class="price">€ <?php echo $result['price'];?></span></p>
+				<div class="button"><span><a href="preview.php?pId=<?php echo $result['productId'];?>" class="details">Details</a></span></div>
 			</div>
-
-	
-	
-    </div>
- </div>
+			
+			<?php 
+					}
+				} else {
+					echo "<h4>Er zijn momenteel geen producten gevonden in deze categorie</h4>";
+				} 
+		?>
+		</div>
+ 	</div>
 </div>
 
 <?php include './inc/footer.php'; ?>

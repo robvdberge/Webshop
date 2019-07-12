@@ -1,80 +1,82 @@
-<?php include './inc/header.php'; ?>
+<?php 
+include $_SERVER['DOCUMENT_ROOT'].'/webshop/inc/header.php'; 
 
- <div class="main">
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
+    $insertUser = $ur->userRegistrate($_POST);
+}
+
+?>
+
+<div class="main">
     <div class="content">
     	 <div class="login_panel">
-        	<h3>Existing Customers</h3>
-        	<p>Sign in with the form below.</p>
-        	<form action="hello" method="get" id="member">
-                	<input name="Domain" type="text" value="Username" class="field" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}">
-                    <input name="Domain" type="password" value="Password" class="field" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
-                 </form>
-                 <p class="note">If you forgot your passoword just enter your email and click <a href="#">here</a></p>
-                    <div class="buttons"><div><button class="grey">Sign In</button></div></div>
-                    </div>
-    	<div class="register_account">
-    		<h3>Register New Account</h3>
-    		<form>
-		   			 <table>
-		   				<tbody>
-						<tr>
-						<td>
-							<div>
-							<input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}" >
-							</div>
-							
-							<div>
-							   <input type="text" value="City" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'City';}">
-							</div>
-							
-							<div>
-								<input type="text" value="Zip-Code" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Zip-Code';}">
-							</div>
-							<div>
-								<input type="text" value="E-Mail" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-Mail';}">
-							</div>
-		    			 </td>
-		    			<td>
-						<div>
-							<input type="text" value="Address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Address';}">
-						</div>
-		    		<div>
-						<select id="country" name="country" onchange="change_country(this.value)" class="frm-field required">
-							<option value="null">Select a Country</option>         
-							<option value="AF">Afghanistan</option>
-							<option value="AL">Albania</option>
-							<option value="DZ">Algeria</option>
-							<option value="AR">Argentina</option>
-							<option value="AM">Armenia</option>
-							<option value="AW">Aruba</option>
-							<option value="AU">Australia</option>
-							<option value="AT">Austria</option>
-							<option value="AZ">Azerbaijan</option>
-							<option value="BS">Bahamas</option>
-							<option value="BH">Bahrain</option>
-							<option value="BD">Bangladesh</option>
-
-		         </select>
-				 </div>		        
-	
-		           <div>
-		          <input type="text" value="Phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone';}">
-		          </div>
-				  
-				  <div>
-					<input type="text" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+        	<h3>Ik heb al een account</h3>
+        	<p>Inloggen</p>
+        	<form action="hello" method="post" id="member">
+            	<input name="Domain" type="text">
+                <input name="Domain" type="password">
+            </form>
+            <p class="note">Help, ik ben mijn wachtwoord <a href="#">vergeten</a></p>
+			<div class="buttons"><div><button class="grey">Log in</button></div>
+		</div>
+	</div>
+	<div class="register_account">
+		<h3>Registeer een nieuw account</h3>
+		<?php if ( isset($insertUser)){echo $insertUser;}?>
+		<form action="" method="post">
+			<table>
+				<tbody>
+				<tr>
+					<td>
+					<div>
+						<input type="text" Name="naam" placeholder="Naam"/>
+					</div>
+					<div>
+						<input type="text" Name="woonplaats" placeholder="Woonplaats"/>
+					</div>
+					<div>
+						<input type="text" Name="postcode" placeholder="Postcode"/>
+					</div>
+					<div>
+						<input type="text" Name="email" placeholder="Emailadres"/>
+					</div>
+					</td>
+					<td>
+					<div>
+						<input type="text" Name="adres" placeholder="Postadres"/>
+					</div>
+					<div>
+						<select id="country" name="land" onchange="change_country(this.value)" class="frm-field required">
+							<option value="null">Selecteer uw land</option>         
+							<option value="NL">Nederland</option>
+							<option value="BE">België</option>
+							<option value="LX">Luxemburg</option>
+							<option value="DE">Duitsland</option>
+							<option value="FR">Frankrijk</option>
+						</select>
+					</div>		        
+					<div>
+						<input type="text" Name="telnummer" placeholder="Telefoonnummer"/>
+					</div>
+					<div>
+						<input type="text" Name="pwd" placeholder="Nieuw Wachtwoord"/>
+					</div>
+					</td>
+				</tr> 
+				</tbody>
+			</table> 
+			<div class="search">
+				<div>
+					<input type="submit" name="submit" Value="Maak aan" Class="grey" />
 				</div>
-		    	</td>
-		    </tr> 
-		    </tbody></table> 
-		   <div class="search"><div><button class="grey">Create Account</button></div></div>
-		    <p class="terms">By clicking 'Create Account' you agree to the <a href="#">Terms &amp; Conditions</a>.</p>
-		    <div class="clear"></div>
-		    </form>
-    	</div>  	
-       <div class="clear"></div>
-    </div>
- </div>
+			</div>
+			<p class="terms">Door te klikken ga je akkoord met onze <a href="#">voorwaarden &amp; condities</a>.</p>
+			<div class="clear"></div>
+		</form>
+	</div>  	
+	<div class="clear"></div>
+</div>
+</div>
 </div>
 
 

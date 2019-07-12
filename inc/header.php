@@ -12,6 +12,8 @@ $db = new Database;
 $fm = new Format;
 $pd = new Product;
 $ct = new Cart;
+$cat = new Category;
+$ur = new User;
 
 ?>
 
@@ -51,9 +53,21 @@ $ct = new Cart;
             </div>
             <div class="shopping_cart">
                 <div class="cart">
-                    <a href="#" title="View my shopping cart" rel="nofollow">
-                        <span class="cart_title">Cart</span>
-                        <span class="no_product">(empty)</span>
+                    <a href="cart.php" title="View my shopping cart" rel="nofollow">
+                    <span class="cart_title"></span>
+                    <span class="no_product">
+                    <?php
+                        $checkCart = $ct->checkCart();
+                            if ( $checkCart ){
+                                $som = Session::get('total');
+                                $qty = Session::get('qty');
+                                //$som = $som + round(($som * 0.21), 2); 
+                                echo "€ " . $som . " Stuks: " . $qty; 
+                            } else { 
+                                echo "(empty)";
+                            }
+                    ?>
+                    </span>
                     </a>
                 </div>
             </div>
@@ -62,13 +76,13 @@ $ct = new Cart;
             <div class="clear">
             </div>
         </div>
-        <div class="clear">
-        </div>
+        <div class="clear"></div>
     </div>
     <div class="menu">
         <ul id="dc_mega-menu-orange" class="dc_mm-orange">
         <li><a href="index.php">Home</a></li>
         <li><a href="products.php">Products</a> </li>
+        <li><a href="categories.php">Categories</a></li>
         <li><a href="topbrands.php">Top Brands</a></li>
         <li><a href="cart.php">Cart</a></li>
         <li><a href="contact.php">Contact</a> </li>
