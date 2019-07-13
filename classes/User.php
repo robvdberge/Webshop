@@ -80,6 +80,12 @@ class User{
     }
 
     // Read
+    public function getUser($id)
+    {
+        $query = "SELECT * FROM tbl_user WHERE id = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
     public function checkMail($email)
     {
         $query = "SELECT * FROM tbl_user WHERE email = '$email'";
@@ -87,24 +93,98 @@ class User{
         return $result;
     }
 
-    public function login($naam, $pwd)
+    public function UserLogin($data)
     {
+        $naam = $data['naam'];
+        $pwd = $data['pwd'];
         // sanitize input
         $naam           = $this->fm->validate($naam); // sanitize input
-        $pwd          = $this->fm->validate($pwd); // sanitize input
+        $pwd            = $this->fm->validate($pwd); // sanitize input
         $naam           = mysqli_real_escape_string($this->db->link, $naam);
-        $pwd          = mysqli_real_escape_string($this->db->link, $pwd);
+        $pwd            = mysqli_real_escape_string($this->db->link, $pwd);
+        if ( $naam == "" || $pwd == ""){
+            $msg = "Er mogen geen lege velden zijn";
+            return $msg;
+        } 
+        $query = "SELECT * FROM tbl_user WHERE naam = '$naam' OR email = '$naam'";
+        $result = $this->db->select($query);
+        if ( !$result ){
+            $msg = "<span class='error'>Deze naam of emailadres is niet bekend</span>";
+            return $msg;
+        } else { // user bekend in database -> checkpassword
+            $checkPwd = $this->checkPwd($naam, $pwd);
+            if ( !$checkPwd ){
+                $msg = "<span class='error'>Onjuist wachtwoord</span>";
+                return $msg;
+            } else {
+                $value = $result->fetch_assoc();
+                Session::set('userLogin', TRUE );
+                Session::set('userId', $value['id']);
+                Session::set('userName', $value['naam']);
 
-        $query = "SELECT * FROM tbl_user WHERE naam OR email = '$naam'";
-        $result = $this->db->select($query)->fetch_assoc();
-        $pwdCheck = password_verify($result['pwd'], $pwd);
-        if ( !$pwdCheck ){
-            return "De naam/email en wachtwoord combinatie is niet juist";
+                header('location: profile.php');
+            }
+        }
+    }
+
+    public function checkPwd($naam, $pwd)
+    {
+        $query = "SELECT * FROM tbl_user WHERE naam = '$naam' OR email = '$naam'";
+        $result = $this->db->select($query);
+        $result = $result->fetch_assoc();
+        $pwdDb = $result['pwd'];
+        $pwdCheck = password_verify($pwd, $pwdDb);
+        if ( $pwdCheck ){
+            return TRUE;
         } else {
-
+            return FALSE;
         }
     }
     // Update
+    public function userUpdate($data)
+    {
+        $naam           = $this->fm->validate($data['naam']); // sanitize input
+        $adres          = $this->fm->validate($data['adres']); // sanitize input
+        $woonplaats     = $this->fm->validate($data['woonplaats']); // sanitize input
+        $postcode       = $this->fm->validate($data['postcode']); // sanitize input
+        $land           = $this->fm->validate($data['land']); // sanitize input
+        $telnummer      = $this->fm->validate($data['telnummer']); // sanitize input
+        $email          = $this->fm->validate($data['email']); // sanitize input
+
+        $naam           = mysqli_real_escape_string($this->db->link, $naam);
+        $adres          = mysqli_real_escape_string($this->db->link, $adres);
+        $woonplaats     = mysqli_real_escape_string($this->db->link, $woonplaats);
+        $postcode       = mysqli_real_escape_string($this->db->link, $postcode);
+        $land           = mysqli_real_escape_string($this->db->link, $land);
+        $telnummer      = mysqli_real_escape_string($this->db->link, $telnummer);
+        $email          = mysqli_real_escape_string($this->db->link, $email);
+        $id = $data['id'];
+        
+        if ( $naam == "" || $adres == "" || $woonplaats == "" || $postcode == "" || $land == "" || $telnummer == "" || $email == ""){
+            $msg = '<span class="error">Er mogen geen lege velden ingevoerd zijn</span>';
+            return $msg;
+        } else{
+            $query = "UPDATE tbl_user 
+            SET
+                naam = '$naam', 
+                adres = '$adres', 
+                woonplaats = '$woonplaats', 
+                postcode = '$postcode', 
+                land = '$land', 
+                telnummer = '$telnummer', 
+                email = '$email'
+            WHERE id = '$id' ";
+
+            $result = $this->db->update($query);
+            if ( $result ){
+                $msg = "<span class='success'>Uw wijzigingen zijn opgeslagen</span>";
+                return $msg;
+            } else{
+                $msg = "<span class='error'>Uw wijzigingen zijn NIET opgeslagen</span>";
+                return $msg;
+            }
+        }
+    }
 
     // Delete
 }

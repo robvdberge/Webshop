@@ -1541,6 +1541,41 @@ table.tblone img {
 	color:green;
 	font-size: 18px;
 }
+.payment{
+	width: 500px;
+	min-height: 200px;
+	text-align: center;
+	border: 1px solid #ddd;
+	margin: 0 auto;
+	padding: 50px;
+}
+.payment h2{
+	border-bottom: 2px solid #ddd;
+	margin-bottom: 40px;
+	padding-bottom: 10px;
+}
+.payment a{
+	background-color: #00ff;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 25px;
+	padding: 5px;
+}
+.payment a:hover{
+	background-color: #55ff11; 
+}
+.back a{
+	width: 150px;
+	margin: 5px auto;
+	padding: 7px 0;
+	text-align: center;
+	display: block;
+	background: #555;
+	border: 1px solid #333;
+	color: #fff;
+	border-radius: 3px;
+	font-size: 25px;
+}
 /**** Responsive Layout ****/
 @media only screen and (max-width:1024px) {
 	.wrap{

@@ -8,12 +8,14 @@ class Cart{
     private $db;
     private $fm;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = new Database;
         $this->fm = new Format;
     }
     // Create
-    public function addToCart($quantity, $id){
+    public function addToCart($quantity, $id)
+    {
         $quantity = $this->fm->validate($quantity); // sanitize input
         $quantity = mysqli_real_escape_string($this->db->link, $quantity);
         $productId = mysqli_real_escape_string($this->db->link, $id);
@@ -54,7 +56,8 @@ class Cart{
         return $result;
     }
 
-    public function checkCart(){
+    public function checkCart()
+    {
         $sId = session_id();
         $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";
         $result = $this->db->select($query);
@@ -91,5 +94,13 @@ class Cart{
             $msg = "<span class='error'>Er is iets foutgegaan bij verwijdering</span>";
             return $msg;
         }
+    }
+
+    public function clearCartInDb()
+    {
+        $sId = session_id();
+        $query = "DELETE FROM tbl_cart WHERE sId = '$sId'";
+        $result = $this->db->delete($query);
+        return;
     }
 }

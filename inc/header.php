@@ -15,6 +15,7 @@ $ct = new Cart;
 $cat = new Category;
 $ur = new User;
 
+$loggedIn = Session::get('userLogin');
 ?>
 
 <!DOCTYPE HTML>
@@ -57,11 +58,10 @@ $ur = new User;
                     <span class="cart_title"></span>
                     <span class="no_product">
                     <?php
-                        $checkCart = $ct->checkCart();
+                        $checkCart = $ct->checkCart(); // vul winkelwagenicoon in menu
                             if ( $checkCart ){
                                 $som = Session::get('total');
                                 $qty = Session::get('qty');
-                                //$som = $som + round(($som * 0.21), 2); 
                                 echo "€ " . $som . " Stuks: " . $qty; 
                             } else { 
                                 echo "(empty)";
@@ -71,7 +71,11 @@ $ur = new User;
                     </a>
                 </div>
             </div>
-            <div class="login"><a href="login.php">Login</a>
+            <?php if ( !$loggedIn ){ ?>
+                <div class="login"><a href="login.php">Login</a>
+            <?php } else { ?>
+                <div class="login"><a href="?uId=<?php echo Session::get('userId');?>">Logout</a>
+            <?php } ?>
             </div>
             <div class="clear">
             </div>
@@ -82,10 +86,23 @@ $ur = new User;
         <ul id="dc_mega-menu-orange" class="dc_mm-orange">
         <li><a href="index.php">Home</a></li>
         <li><a href="products.php">Products</a> </li>
-        <li><a href="categories.php">Categories</a></li>
+        <!-- <li><a href="categories.php">Categories</a></li> -->
         <li><a href="topbrands.php">Top Brands</a></li>
+        <?php
+            $checkCart = $ct->checkCart(); 
+            if ( $checkCart ){?>
         <li><a href="cart.php">Cart</a></li>
+        <li><a href="payment.php">Betalen</a></li>
+            <?php } ?>
         <li><a href="contact.php">Contact</a> </li>
+        <?php if ( $loggedIn ){ // laat alleen zien als ingelogd is ?>
+            <li><a href="profile.php">Instellingen</a> </li>
+        <?php } ?>
         <div class="clear"></div>
         </ul>
     </div>
+    <?php 
+    if ( isset($_GET['uId']) ){
+        $ct->clearCartInDb(); // verwijder alle cartinformatie in db -> leeg winkelwagen
+        Session::destroy();
+    }?>

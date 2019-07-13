@@ -1,8 +1,18 @@
 <?php 
 include $_SERVER['DOCUMENT_ROOT'].'/webshop/inc/header.php'; 
+$loggedIn = Session::get('userLogin');
+
+if ( $loggedIn ){
+	header('location: order.php');
+	exit();
+}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
     $insertUser = $ur->userRegistrate($_POST);
+}
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login']) ){
+	 $loginUser = $ur->userLogin($_POST);
 }
 
 ?>
@@ -12,12 +22,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit']) ){
     	 <div class="login_panel">
         	<h3>Ik heb al een account</h3>
         	<p>Inloggen</p>
-        	<form action="hello" method="post" id="member">
-            	<input name="Domain" type="text">
-                <input name="Domain" type="password">
-            </form>
+			<?php if ( isset($loginUser)){echo $loginUser;}?>
+        	<form action="" method="post" id="member">
+            	<input name="naam" type="text" placeholder="naam/email">
+                <input name="pwd" type="password" placeholder="wachtwoord">
+            
             <p class="note">Help, ik ben mijn wachtwoord <a href="#">vergeten</a></p>
-			<div class="buttons"><div><button class="grey">Log in</button></div>
+			<div class="buttons"><div><input type="submit" name="login" class="grey" value="Log in"/></div>
+			</form>
 		</div>
 	</div>
 	<div class="register_account">

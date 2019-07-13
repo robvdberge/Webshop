@@ -15,12 +15,14 @@ class Product{
     private $db;
     private $fm;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = new Database;
         $this->fm = new Format;
     }
     // Create
-    public function productInsert($data, $file){
+    public function productInsert($data, $file)
+    {
         $productName    = $this->fm->validate($data['productName']); // sanitize input
         $catId          = $this->fm->validate($data['catId']);
         $brandId        = $this->fm->validate($data['brandId']);
@@ -134,7 +136,8 @@ class Product{
     }
 
     // Update
-    public function productUpdate($data, $file, $id){
+    public function productUpdate($data, $file, $id)
+    {
         $productName    = $this->fm->validate($data['productName']); // sanitize input
         $catId          = $this->fm->validate($data['catId']);
         $brandId        = $this->fm->validate($data['brandId']);
@@ -212,7 +215,8 @@ class Product{
     }
 
     // Delete
-    public function prodDelById($pdId){
+    public function prodDelById($pdId)
+    {
         // first delete the uploaded image files
         $linkQuery = "SELECT * FROM tbl_product where productId = '$pdId'"; // find imagenames
         $getData = $this->db->select($linkQuery);
@@ -234,7 +238,8 @@ class Product{
     }
 
     // Get the Featured products 
-    public function getFeaturedProduct(){
+    public function getFeaturedProduct()
+    {
         $query = "SELECT tbl_product.*, tbl_category.catName, tbl_brand.brandName
         FROM tbl_product 
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
