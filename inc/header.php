@@ -14,6 +14,7 @@ $pd = new Product;
 $ct = new Cart;
 $cat = new Category;
 $ur = new User;
+$or = new Order;
 
 $loggedIn = Session::get('userLogin');
 ?>
@@ -49,12 +50,12 @@ $loggedIn = Session::get('userLogin');
         <div class="header_top_right">
             <div class="search_box">
                 <form>
-                    <input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
+                    <input type="text" value="Zoek producten" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="Zoek">
                 </form>
             </div>
             <div class="shopping_cart">
                 <div class="cart">
-                    <a href="cart.php" title="View my shopping cart" rel="nofollow">
+                    <a href="cart.php" title="Bekijk winkelwagen" rel="nofollow">
                     <span class="cart_title"></span>
                     <span class="no_product">
                     <?php
@@ -85,13 +86,13 @@ $loggedIn = Session::get('userLogin');
     <div class="menu">
         <ul id="dc_mega-menu-orange" class="dc_mm-orange">
         <li><a href="index.php">Home</a></li>
-        <li><a href="products.php">Products</a> </li>
+        <li><a href="products.php">Producten</a> </li>
         <!-- <li><a href="categories.php">Categories</a></li> -->
-        <li><a href="topbrands.php">Top Brands</a></li>
+        <li><a href="topbrands.php">Top Merken</a></li>
         <?php
             $checkCart = $ct->checkCart(); 
             if ( $checkCart ){?>
-        <li><a href="cart.php">Cart</a></li>
+        <li><a href="cart.php">Winkelwagen</a></li>
         <li><a href="payment.php">Betalen</a></li>
             <?php } ?>
         <li><a href="contact.php">Contact</a> </li>

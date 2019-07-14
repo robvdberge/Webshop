@@ -52,7 +52,7 @@ if ( !isset( $_GET['id'] ) ){
 								<td><?php echo $i;?></td>
 								<td><?php echo $fillCart['productName'];?></td>
 								<td><img src="<?php echo "admin/" . $fillCart['image'];?>" alt=""/></td>
-								<td><?php echo $fillCart['price'];?></td>
+								<td>€ <?php echo $fillCart['price'];?></td>
 								<td>
 									<form action="" method="post">
 										<input type="hidden" name="cartId" value="<?php echo $fillCart['cartId'];?>"/>

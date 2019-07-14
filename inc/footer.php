@@ -2,32 +2,32 @@
     <div class="wrapper">	
         <div class="section group">
             <div class="col_1_of_4 span_1_of_4">
-                <h4>Information</h4>
+                <h4>Informatie</h4>
                 <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Customer Service</a></li>
-                <li><a href="#"><span>Advanced Search</span></a></li>
-                <li><a href="#">Orders and Returns</a></li>
-                <li><a href="#"><span>Contact Us</span></a></li>
+                <li><a href="about.php">Over Ons</a></li>
+                <li><a href="faq.php">Klantenservice</a></li>
+                <li><a href="#"><span>Uitgebreid Zoeken</span></a></li>
+                <li><a href="faq.php">Bestellingen en teruggave</a></li>
+                <li><a href="contact.php"><span>Neem contact met ons op</span></a></li>
                 </ul>
             </div>
             <div class="col_1_of_4 span_1_of_4">
-                <h4>Why buy from us</h4>
+                <h4>Waarom bij ons?</h4>
                 <ul>
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="faq.php">Customer Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="about.php">Over Ons</a></li>
+                    <li><a href="faq.php">Klantenservice</a></li>
+                    <li><a href="contact.php">Privacy Policy</a></li>
                     <li><a href="contact.php"><span>Site Map</span></a></li>
-                    <li><a href="preview.php"><span>Search Terms</span></a></li>
+                    <li><a href="index.php"><span>Zoek opdrachten</span></a></li>
                 </ul>
             </div>
             <div class="col_1_of_4 span_1_of_4">
-                <h4>My account</h4>
+                <h4>Mijn account</h4>
                 <ul>
-                    <li><a href="contact.php">Sign In</a></li>
-                    <li><a href="index.php">View Cart</a></li>
-                    <li><a href="#">My Wishlist</a></li>
-                    <li><a href="#">Track My Order</a></li>
+                    <li><a href="login.php">Sign In</a></li>
+                    <li><a href="cart.php">Bekijk Winkelwagen</a></li>
+                    <li><a href="#">Mijn Verlanglijst</a></li>
+                    <li><a href="#">Bekijk mijn order</a></li>
                     <li><a href="faq.php">Help</a></li>
                 </ul>
             </div>
@@ -38,7 +38,7 @@
                     <li><span>www.easylearningbd.com</span></li>
                 </ul>
                 <div class="social-icons">
-                    <h4>Follow Us</h4>
+                    <h4>Volg ons op Social Media</h4>
                     <ul>
                         <li class="facebook"><a href="#" target="_blank"> </a></li>
                         <li class="twitter"><a href="#" target="_blank"> </a></li>
