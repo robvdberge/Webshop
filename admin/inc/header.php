@@ -79,6 +79,7 @@ header("Cache-Control: max-age=2592000");
                 <li class="ic-form-style"><a href=""><span>User Profile</span></a></li>
 		
 				<li class="ic-grid-tables"><a href="inbox.php"><span>Inbox</span></a></li>
+				<li class="ic-grid-tables"><a href="mainorder.php"><span>Bestellingen</span></a></li>
                 <li class="ic-charts"><a href=""><span>Visit Website</span></a></li>
             </ul>
         </div>

@@ -20,5 +20,11 @@ class Format{
         $data = stripcslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-       }
+    }
+
+    public function datumFormat($date)
+    {
+        return date('j F Y,g:i a', strtotime($date));
+        // Format : Dag Maand Jaar , Uur : Minuut AM/PM
+    }
 }

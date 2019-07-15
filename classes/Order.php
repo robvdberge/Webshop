@@ -17,18 +17,47 @@ class Order
     }
 
     // Create
-    public function insertOrder()
+    public function insertOrder($uId)
     {
         $sId = session_id();
         $query = "SELECT * FROM tbl_cart WHERE sId = '$sId'";
         $getCartData = $this->db->select($query);
         if ( $getCartData ){
             while ( $cartData = $getCartData->fetch_assoc() ){
-                // Continue Here!!!
+                $productId      = $cartData['productId'];
+                $productName    = $cartData['productName'];
+                $qty            = $cartData['qty'];
+                $price          = $cartData['price'];
+                $image          = $cartData['image'];
+                
+                $query = "INSERT INTO tbl_order(userId, productId, productName, price, qty, image) 
+                VALUES('$uId', '$productId', '$productName', '$price', '$qty', '$image' )";
+
+            $result = $this->db->insert($query);
+            
+            }
+            if ($result){
+                return TRUE;
+            } else {
+                return FALSE;
             }
         }
     }
+    
     // Read
+    public function getOrder($uId)
+    {
+        $query = "SELECT * FROM tbl_order WHERE userId = '$uId'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function checkOrders($uId)
+    {
+        $query = "SELECT * FROM tbl_order WHERE userId = '$uId'";
+        $result = $this->db->select($query);
+        return $result;
+    }
 
     // Update
 

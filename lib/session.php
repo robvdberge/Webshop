@@ -1,4 +1,6 @@
 <?php
+// Session Variable: userLogin, userId, userName
+//                    Boolean     int    varchar
 // Session class
 class Session{
     

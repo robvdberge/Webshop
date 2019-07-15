@@ -17,6 +17,7 @@ $ur = new User;
 $or = new Order;
 
 $loggedIn = Session::get('userLogin');
+$uId = Session::get('userId');
 ?>
 
 <!DOCTYPE HTML>
@@ -90,13 +91,18 @@ $loggedIn = Session::get('userLogin');
         <!-- <li><a href="categories.php">Categories</a></li> -->
         <li><a href="topbrands.php">Top Merken</a></li>
         <?php
-            $checkCart = $ct->checkCart(); 
+            $checkCart = $ct->checkCart();                  // menu items Winkelwagen en Betalen
             if ( $checkCart ){?>
-        <li><a href="cart.php">Winkelwagen</a></li>
+        <li><a href="cart.php">Winkelwagen</a></li> 
         <li><a href="payment.php">Betalen</a></li>
             <?php } ?>
+            <?php
+            $checkOrders = $or->checkOrders($uId);          // menu item Bestellingen
+            if ( $checkOrders ){?>
+        <li><a href="order.php">Bestellingen</a></li>
+            <?php } ?>
         <li><a href="contact.php">Contact</a> </li>
-        <?php if ( $loggedIn ){ // laat alleen zien als ingelogd is ?>
+        <?php if ( $loggedIn ){                             // menu item Instellingen ?>
             <li><a href="profile.php">Instellingen</a> </li>
         <?php } ?>
         <div class="clear"></div>

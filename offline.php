@@ -8,7 +8,15 @@ if ( !$loggedIn ){
 }
 if ( isset($_GET['orderId']) && $_GET['orderId'] == 'order'){
     $uId = Session::get('userId');
-    $insertOrder = $or->insertOrder();
+    $insertOrder = $or->insertOrder($uId);
+    $ct->clearCartInDb();
+    if ($insertOrder){
+        header('location: paymentsuccess.php');
+        exit();
+    } else {
+        header('location: cart.php');
+        exit();
+    }
 }
 ?>
 <style>
