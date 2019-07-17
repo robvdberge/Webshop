@@ -59,7 +59,57 @@ class Order
         return $result;
     }
 
+    public function getAllOrders()
+    {
+        $query = "SELECT * 
+        FROM tbl_order 
+        ORDER BY orderId";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
     // Update
+    public function updateStatus($id, $price, $datum)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        // $price = mysqli_real_escape_string($this->db->link, $price);
+        $datum = mysqli_real_escape_string($this->db->link, $datum);
+
+        $query = "UPDATE tbl_order 
+        SET status = '1' 
+        WHERE 
+        userId = '$id' AND
+        datum = '$datum' AND
+        price LIKE '$price'";
+
+        $statusUpdate = $this->db->update($query);
+        if ( $statusUpdate){
+            $msg = '<span class="success">Status is succesvol verandert</span>';
+            return $msg;
+        } else {
+            $msg = '<span class="error">Status is niet verandert</span>';
+            return $msg;
+        }
+    }
 
     // Delete
+    public function deleteOrder($id, $price, $datum)
+    {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+        $datum = mysqli_real_escape_string($this->db->link, $datum);
+
+        $query = "DELETE FROM tbl_order  
+        WHERE userId = '$id' AND
+        datum = '$datum' AND
+        price LIKE '$price'";
+        $deleteOrder = $this->db->update($query);
+        if ( $deleteOrder){
+            $msg = '<span class="success">Bestelling succesvol verwijdert</span>';
+            return $msg;
+        } else {
+            $msg = '<span class="error">Bestelling is niet verwijdert</span>';
+            return $msg;
+        }
+    }
 }

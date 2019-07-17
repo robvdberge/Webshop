@@ -1,5 +1,5 @@
 <?php
-
+// validate input, shorten strings, give orderstatus
 // Format class
 class Format{
 
@@ -26,5 +26,23 @@ class Format{
     {
         return date('j F Y,g:i a', strtotime($date));
         // Format : Dag Maand Jaar , Uur : Minuut AM/PM
+    }
+
+    public function getStatus($nr)
+    {
+        switch ($nr) {
+            case '0':
+                return 'In behandeling';
+                break;
+            case '1':
+                return 'Verzonden';
+                break;
+            case '2':
+                return 'Aangekomen';
+                break;
+            default:
+                return 'In behandeling';
+                break;
+            }
     }
 }

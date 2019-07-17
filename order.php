@@ -7,6 +7,7 @@ if ( !$loggedIn ){
 	exit();
 }
 $uId = Session::get('userId');
+$fm = new Format;
 
 ?>
 <style>
@@ -56,17 +57,7 @@ $uId = Session::get('userId');
                         <td><?php echo $fm->datumFormat($showOrder['datum']);?></td>
                         <td>
                             <?php 
-                            switch ($showOrder['status']) {
-                            case '0':
-                                echo 'In behandeling';
-                                break;
-                            case '1':
-                                echo 'Verzonden';
-                                break;
-                            default:
-                                echo 'In behandeling';
-                                break;
-                            }
+                            echo $status = $fm->getStatus($showOrder['status']);
                             ?>
                         </td>
                         <td>
