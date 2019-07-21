@@ -4,7 +4,9 @@ include '../lib/session.php';
 Session::checkLogin();
 include_once '../lib/database.php';
 include_once '../helpers/format.php';
-
+// table = tbl_admin 
+// adminId, adminName, adminUser, adminEmail, adminPass, level
+//   int     varchar    varchar     varchar    varchar   tinyint
 // Class adminlogin
 
 class AdminLogin{

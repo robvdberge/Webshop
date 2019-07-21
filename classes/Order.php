@@ -1,8 +1,10 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/database.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/format.php';
-// tbl_product: orderId ,userId , productId , productName, qty ,  price ,   image
-//              (int)     (int)     (int)       (varchar) (int)(float 10,2)(varchar)
+
+// tbl_order: 
+// orderId ,userId , productId , productName, qty ,  price ,   image
+//  (int)     (int)     (int)       (varchar) (int)(float 10,2)(varchar)
 // 
 // Class Order
 class Order

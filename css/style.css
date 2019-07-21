@@ -608,6 +608,7 @@ p.note{
 	margin-left: 0.5%; 
 } 
 .images_1_of_4 {
+	height: 65vh;
 	width: 20.8%;
 	padding:1.5%;
 	text-align:center;

@@ -3,6 +3,11 @@ include 'lib/Session.php';
 Session::init();
 include $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/Database.php';
 include 'helpers/Format.php';
+/* or this way:
+    $filepath = realpath(dirname(__FILE__));
+    include_once ($filepath.'/../lib/Database.php');
+    include_once ($filepath.'/../helpers/Format.php');
+*/
 
 spl_autoload_register(function($class){
     include_once 'classes/' . $class . '.php';
@@ -17,7 +22,9 @@ $ur = new User;
 $or = new Order;
 
 $loggedIn = Session::get('userLogin');
-$uId = Session::get('userId');
+if (!$uId = Session::get('userId')){
+	$uId = 0;
+} 
 ?>
 
 <!DOCTYPE HTML>
@@ -89,7 +96,7 @@ $uId = Session::get('userId');
         <li><a href="index.php">Home</a></li>
         <li><a href="products.php">Producten</a> </li>
         <!-- <li><a href="categories.php">Categories</a></li> -->
-        <li><a href="topbrands.php">Top Merken</a></li>
+        <!-- <li><a href="topbrands.php">Top Merken</a></li> -->
         <?php
             $checkCart = $ct->checkCart();                  // menu items Winkelwagen en Betalen
             if ( $checkCart ){?>
@@ -101,6 +108,11 @@ $uId = Session::get('userId');
             if ( $checkOrders ){?>
         <li><a href="order.php">Bestellingen</a></li>
             <?php } ?>
+            <?php
+            $checkComp = $pd->getCompProd($uId);          // menu item Bestellingen
+            if ( $checkComp ){?>
+        <li><a href="compare.php">Vergelijk</a> </li>
+            <?php } ?>
         <li><a href="contact.php">Contact</a> </li>
         <?php if ( $loggedIn ){                             // menu item Instellingen ?>
             <li><a href="profile.php">Instellingen</a> </li>
@@ -111,5 +123,6 @@ $uId = Session::get('userId');
     <?php 
     if ( isset($_GET['uId']) ){
         $ct->clearCartInDb(); // verwijder alle cartinformatie in db -> leeg winkelwagen
+        $pd->clearComp();     // verwijder alle data in de vergelijklijst
         Session::destroy();
     }?>

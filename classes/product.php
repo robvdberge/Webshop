@@ -7,9 +7,9 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/Format.php';
     include_once ($filepath.'/../lib/Database.php');
     include_once ($filepath.'/../helpers/Format.php');
 */
-
-// tbl_product: productId (int),productName (varchar), catId (int), brandId(int), body (varchar),price (float 10,2), image (blob), type (0,1)
-
+// tbl_product
+// : productId ,productName , catId , brandId, body,     price ,    image , type 
+//     (int)     (varchar)    (int)    (int) (text)(float 10,2)(varchar)  (0,1)
 // Product Class
 class Product{
     private $db;
@@ -59,6 +59,79 @@ class Product{
                 return $msg;
             } else{
                 $msg = '<span class="error">Product is niet juist ingevoerd</span>';
+                return $msg;
+            }
+        }
+    }
+
+    public function createComp($pId, $uId)
+    {
+        $pId          = $this->fm->validate($pId);
+        $uId          = $this->fm->validate($uId);
+        $pId          = mysqli_real_escape_string($this->db->link, $pId);
+        $uId          = mysqli_real_escape_string($this->db->link, $uId);
+        $sId          = session_id();
+        $checkProdAdded = "SELECT productName, price, image FROM tbl_compare WHERE productId = '$pId' AND userId='$uId' AND sessionId='$sId'";
+        $checkAdded = $this->db->select($checkProdAdded);
+        if ($checkAdded){
+            $msg = '<span class="error">Dit product is al toegevoegd</span>';
+            return $msg;
+        } else {
+
+            $getQuery = "SELECT productName, price, image FROM tbl_product WHERE productId = '$pId'";
+            $getProductData = $this->db->select($getQuery);
+            if ( $getProductData ){
+                while ( $prodData = $getProductData->fetch_assoc()){
+                    $productName    = $prodData['productName'];
+                    $price          = $prodData['price'];
+                    $image          = $prodData['image'];
+                }
+            }
+
+            $insertQuery = "INSERT INTO tbl_compare(userId, sessionId, productId, productName, price, image) 
+            VALUES( '$uId', '$sId', '$pId', '$productName', '$price', '$image')";
+            $result = $this->db->insert($insertQuery);
+            if ($result){
+                $msg = '<span class="success">Het product staat in de vergelijklijst</span>';
+                return $msg;
+            } else {
+                $msg = '<span class="error">Er is iets fout gegaan</span>';
+                return $msg;
+            }
+        }
+    }
+
+    public function createCompBySid($pId)
+    {
+        $pId = $this->fm->validate($pId);
+        $pId = mysqli_real_escape_string($this->db->link, $pId);
+        $sId = session_id();
+        $uId = 0;
+        $checkProdAdded = "SELECT productName, price, image FROM tbl_compare WHERE productId = '$pId' AND sessionId='$sId'";
+        $checkAdded = $this->db->select($checkProdAdded);
+        if ($checkAdded){
+            $msg = '<span class="error">Dit product is al toegevoegd</span>';
+            return $msg;
+        } else {
+
+            $getQuery = "SELECT productName, price, image FROM tbl_product WHERE productId = '$pId'";
+            $getProductData = $this->db->select($getQuery);
+            if ( $getProductData ){
+                while ( $prodData = $getProductData->fetch_assoc()){
+                    $productName    = $prodData['productName'];
+                    $price          = $prodData['price'];
+                    $image          = $prodData['image'];
+                }
+            }
+
+            $insertQuery = "INSERT INTO tbl_compare( userId, sessionId, productId, productName, price, image) 
+            VALUES( '$uId' , '$sId', '$pId', '$productName', '$price', '$image')";
+            $result = $this->db->insert($insertQuery);
+            if ($result){
+                $msg = '<a href="compare.php"><span class="success">Het product staat in de vergelijklijst</span></a>';
+                return $msg;
+            } else {
+                $msg = '<span class="error">Er is iets fout gegaan</span>';
                 return $msg;
             }
         }
@@ -130,6 +203,26 @@ class Product{
         WHERE brandName = '$brand' 
         ORDER BY productId DESC
         LIMIT 1";
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getCompProd($uId)
+    {
+        $sId = session_id();
+        if ( $uId === 0 ){
+            $query ="SELECT * 
+            FROM tbl_compare 
+            WHERE sessionId = '$sId'
+            ORDER BY productId DESC";
+        } else {
+        
+            $query = "SELECT * 
+            FROM tbl_compare 
+            WHERE userId = '$uId' OR sessionId = '$sId'
+            ORDER BY productId DESC";
+        }
 
         $result = $this->db->select($query);
         return $result;
@@ -235,6 +328,27 @@ class Product{
             $msg = "<span class='error'>Er is iets foutgegaan bij verwijdering</span>";
             return $msg;
         }
+    }
+
+    public function delCompItemById($pId)
+    {
+        $query = "DELETE FROM tbl_compare WHERE productId='$pId'";
+        $delCompItem = $this->db->delete($query);
+        if ( $delCompItem ){
+            $msg = '<span class="success">Succesvol verwijdert</span>';
+            return $msg;
+        } else {
+            $msg = '<span class="error">Niet verwijdert</span>';
+            return $msg;
+        }
+    }
+
+    public function clearComp()
+    {
+        $sId = session_id();
+        $query = "DELETE FROM tbl_compare WHERE sessionId = '$sId'";
+        $result = $this->db->delete($query);
+        return;
     }
 
     // Get the Featured products 

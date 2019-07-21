@@ -3,19 +3,36 @@
 if ( !isset($_GET['pId']) || $_GET['pId'] == NULL ){
     echo '<script>window.location = "404.php" </script>';
 } else{
-    $id = $_GET['pId'];
+    $pId = $_GET['pId']; // declare ProductId
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['quantity']) ){
 	$quantity = $_POST['quantity'];
-	$addCart = $ct->addToCart($quantity, $id);
+	$addCart = $ct->addToCart($quantity, $pId);
 }
+if (!$uId = Session::get('userId')){
+	$uId = 0;
+}; // declare UserId
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare']) ){
+	if (isset($_POST['userId'])){
+		$pId = $_POST['productId'];
+		$createComp = $pd->createComp($pId, $uId);
+		echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}&id=live'/> "; // Live update or refresh screen!!!!
+	} else {
+		$createCompBySid = $pd->createCompBySid($pId);
+		echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}&id=live'/> "; // Live update or refresh screen!!!!
+	}
+} 
+// if ( !isset( $_GET['id'] ) ){
+// 	echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}&id=live'/> "; // Live update or refresh screen!!!!
+// }
 ?>
  <div class="main">
     <div class="content">
     	<div class="section group">
 			<?php
-				$getFpd = $pd->getSingleProd($id);
+				$getFpd = $pd->getSingleProd($pId);
 				if ($getFpd){
 					while ( $result = $getFpd->fetch_assoc() ){ // iterate the featured products
 
@@ -35,11 +52,20 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
 				<div class="add-cart">
 					<form action=" " method="post">
 						<input type="number" class="buyfield" name="quantity" value="1"/>
-						<input type="submit" class="buysubmit" name="submit" value="Add to cart"/>
+						<input type="submit" class="buysubmit" name="submit" value="In winkelwagen"/>
 					</form>				
 				</div>
 				<?php if (isset($addCart)){echo $addCart;} // geef de melding?> 
-			</div>
+				<?php if (isset($createComp)){echo $createComp;} // geef de melding?>
+				<?php if (isset($createCompBySid)){echo $createCompBySid;} // geef de melding?>
+				<div class="add-cart">
+					<form action=" " method="post">
+						<input type="hidden" class="buyfield" name="userId" value="<?php echo $uId;?>"/>
+						<input type="hidden" class="buyfield" name="productId" value="<?php echo $pId;?>"/>
+						<input type="submit" class="buysubmit" name="compare" value="Vergelijk"/>	
+					</form>	
+				</div>
+			</div>	
 			<div class="product-desc">
 			<h2>Product Details</h2>
 			<p><?php echo htmlspecialchars_decode($result['body']); ?></p>

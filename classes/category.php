@@ -1,6 +1,9 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/database.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/format.php';
+// table = tbl_cart
+// catId, catName
+//  int   varchar
 // Category class
 class Category{
 

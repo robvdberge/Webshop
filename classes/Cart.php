@@ -1,8 +1,8 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/lib/database.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/format.php';
-// tbl_product: productId ,productName , catId , brandId, body,     price ,    image , type 
-//                (int)     (varchar)    (int)    (int) (varchar)(float 10,2)  (blob)  (0,1)
+// tbl_product: cartId,  sId,    productId, productName, price,    qty,   image 
+//                (int)(varchar)    (int)    (varchar)(float 10,2)  (int)(varchar)
 // Cart Class for front-view
 class Cart{
     private $db;
