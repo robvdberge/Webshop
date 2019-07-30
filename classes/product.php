@@ -10,6 +10,7 @@ include_once $_SERVER['DOCUMENT_ROOT'].'/webshop/helpers/Format.php';
 // tbl_product
 // : productId ,productName , catId , brandId, body,     price ,    image , type 
 //     (int)     (varchar)    (int)    (int) (text)(float 10,2)(varchar)  (0,1)
+//
 // Product Class
 class Product{
     private $db;
@@ -137,6 +138,43 @@ class Product{
         }
     }
 
+    public function createWish($pId, $uId)
+    {
+        $pId          = $this->fm->validate($pId);
+        $uId          = $this->fm->validate($uId);
+        $pId          = mysqli_real_escape_string($this->db->link, $pId);
+        $uId          = mysqli_real_escape_string($this->db->link, $uId);
+        
+        $checkProdAdded = "SELECT productName, price, image FROM tbl_wishlist WHERE productId = '$pId' AND userId='$uId'";
+        $checkAdded = $this->db->select($checkProdAdded);
+        if ($checkAdded){
+            $msg = '<span class="error">Dit product is al toegevoegd</span>';
+            return $msg;
+        } else {
+
+            $getQuery = "SELECT productName, price, image FROM tbl_product WHERE productId = '$pId'";
+            $getProductData = $this->db->select($getQuery);
+            if ( $getProductData ){
+                while ( $prodData = $getProductData->fetch_assoc()){
+                    $productName    = $prodData['productName'];
+                    $price          = $prodData['price'];
+                    $image          = $prodData['image'];
+                }
+            }
+
+            $insertQuery = "INSERT INTO tbl_wishlist(userId, productId, productName, price, image) 
+            VALUES( '$uId', '$pId', '$productName', '$price', '$image')";
+            $result = $this->db->insert($insertQuery);
+            if ($result){
+                $msg = '<span class="success">Het product staat in de vergelijklijst</span>';
+                return $msg;
+            } else {
+                $msg = '<span class="error">Er is iets fout gegaan</span>';
+                return $msg;
+            }
+        }
+    }
+
     // Read
     public function getAllProducts()
     {
@@ -223,6 +261,35 @@ class Product{
             WHERE userId = '$uId' OR sessionId = '$sId'
             ORDER BY productId DESC";
         }
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function checkWens($pId, $uId)
+    {
+        $query = "SELECT * FROM tbl_wishlist WHERE productId = '$pId' AND userId = '$uId'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function checkAnyWish($uId)
+    {
+        $query = "SELECT * FROM tbl_wishlist WHERE userId = '$uId'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getProdsBySearch($search) // Zoek juiste sanitering methode op voor zoekfuncties
+    {
+        $search = mysqli_real_escape_string($this->db->link, $search);
+        $query = "SELECT * 
+        FROM tbl_product 
+        WHERE 
+            productName LIKE '%$search%'
+        OR
+            body LIKE '%$search%'
+        ";
 
         $result = $this->db->select($query);
         return $result;
@@ -349,6 +416,19 @@ class Product{
         $query = "DELETE FROM tbl_compare WHERE sessionId = '$sId'";
         $result = $this->db->delete($query);
         return;
+    }
+
+    public function delWish($pId, $uId)
+    {
+        $query = "DELETE FROM tbl_wishlist WHERE productId='$pId' AND userId = '$uId'";
+        $delWish = $this->db->delete($query);
+        if ( $delWish ){
+            $msg = '<span class="success">Succesvol verwijdert</span>';
+            return $msg;
+        } else {
+            $msg = '<span class="error">Niet verwijdert</span>';
+            return $msg;
+        }
     }
 
     // Get the Featured products 

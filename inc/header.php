@@ -20,6 +20,7 @@ $ct = new Cart;
 $cat = new Category;
 $ur = new User;
 $or = new Order;
+$bd = new Brand;
 
 $loggedIn = Session::get('userLogin');
 if (!$uId = Session::get('userId')){
@@ -57,8 +58,9 @@ if (!$uId = Session::get('userId')){
         </div>
         <div class="header_top_right">
             <div class="search_box">
-                <form>
-                    <input type="text" value="Zoek producten" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="Zoek">
+                <form method="get" action="search.php">
+                    <input type="text" name="search" placeholder="Zoek naar product">
+                    <input type="submit" value="Zoek">
                 </form>
             </div>
             <div class="shopping_cart">
@@ -112,6 +114,11 @@ if (!$uId = Session::get('userId')){
             $checkComp = $pd->getCompProd($uId);          // menu item Bestellingen
             if ( $checkComp ){?>
         <li><a href="compare.php">Vergelijk</a> </li>
+            <?php } ?>
+            <?php
+            $checkAnyWish = $pd->checkAnyWish($uId);
+            if ( $checkAnyWish ){?>
+        <li><a href="wishlist.php">Wenslijst</a> </li>
             <?php } ?>
         <li><a href="contact.php">Contact</a> </li>
         <?php if ( $loggedIn ){                             // menu item Instellingen ?>

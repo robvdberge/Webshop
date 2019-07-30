@@ -1,10 +1,22 @@
-<?php include 'inc/header.php';?>
-<?php include 'inc/sidebar.php';?>
+<?php 
+include 'inc/header.php';
+include 'inc/sidebar.php';
+include '../classes/Brand.php';
+
+$bd = new Brand;
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addSlider']) ){
+    $addSliderImage = $bd->addSliderImage($_POST, $_FILES);
+    //echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}'/> ";
+}
+?>
+
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Add New Slider</h2>
     <div class="block">               
-         <form action="addslider.php" method="post" enctype="multipart/form-data">
+        <form action=" " method="post" enctype="multipart/form-data">
+        <?php if (isset($addSliderImage)){echo $addSliderImage;} ?>
             <table class="form">     
                 <tr>
                     <td>
@@ -27,7 +39,7 @@
 				<tr>
                     <td></td>
                     <td>
-                        <input type="submit" name="submit" Value="Save" />
+                        <input type="submit" name="addSlider" Value="Save" />
                     </td>
                 </tr>
             </table>

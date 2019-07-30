@@ -1,12 +1,13 @@
 <?php
 
-include '../lib/session.php';
+include_once '../lib/session.php';
 Session::checkLogin();
 include_once '../lib/database.php';
 include_once '../helpers/format.php';
 // table = tbl_admin 
 // adminId, adminName, adminUser, adminEmail, adminPass, level
 //   int     varchar    varchar     varchar    varchar   tinyint
+//
 // Class adminlogin
 
 class AdminLogin{
@@ -20,7 +21,8 @@ class AdminLogin{
 
     }
     // check de naam en password voor de admin login methode
-    public function adminLogin($user, $pass){
+    public function adminLogin($user, $pass)
+    {
         $adminUser = $this->fm->validate($user); // sanitize input
         $adminPass = $this->fm->validate($pass); // sanitize input
 
@@ -51,4 +53,5 @@ class AdminLogin{
         }
     }
     
+
 }

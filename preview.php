@@ -24,10 +24,31 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare']) ){
 		echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}&id=live'/> "; // Live update or refresh screen!!!!
 	}
 } 
-// if ( !isset( $_GET['id'] ) ){
-// 	echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}&id=live'/> "; // Live update or refresh screen!!!!
-// }
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addWish']) ){
+	if (isset($_POST['userId'])){
+		$pId = $_POST['productId'];
+		$createWish = $pd->createWish($pId, $uId);
+		echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}'/> "; // Live update or refresh screen!!!!
+	}
+} 
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delWish']) ){
+	if (isset($_POST['userId'])){
+		$pId = $_POST['productId'];
+		$createWish = $pd->delWish($pId, $uId);
+		echo "<meta http-equiv='refresh' content='0;URL=?pId={$pId}'/> "; // Live update or refresh screen!!!!
+	}
+} 
+
+$loggedIn = Session::get('userLogin'); // Kijk if er is ingelogd
+
 ?>
+<style>
+.btn-container{
+	width: 100px;
+	float: left;
+	margin-right: 5px;
+}
+</style>
  <div class="main">
     <div class="content">
     	<div class="section group">
@@ -55,15 +76,38 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare']) ){
 						<input type="submit" class="buysubmit" name="submit" value="In winkelwagen"/>
 					</form>				
 				</div>
-				<?php if (isset($addCart)){echo $addCart;} // geef de melding?> 
-				<?php if (isset($createComp)){echo $createComp;} // geef de melding?>
-				<?php if (isset($createCompBySid)){echo $createCompBySid;} // geef de melding?>
+				<?php if (isset($addCart)){echo $addCart;} 					// geef melding winkelwagen toegevoegd?> 
+				<?php if (isset($createComp)){echo $createComp;} 			// geef melding vergelijk-login?>
+				<?php if (isset($createCompBySid)){echo $createCompBySid;} 	// geef melding vergelijk-logout?>
+				<?php if ( isset($createWish)){echo $createWish;}; 			// geef melding Wishlist?>
 				<div class="add-cart">
-					<form action=" " method="post">
-						<input type="hidden" class="buyfield" name="userId" value="<?php echo $uId;?>"/>
-						<input type="hidden" class="buyfield" name="productId" value="<?php echo $pId;?>"/>
-						<input type="submit" class="buysubmit" name="compare" value="Vergelijk"/>	
-					</form>	
+					<div class="btn-container">
+						<form action=" " method="post">
+							<input type="hidden" class="buyfield" name="userId" value="<?php echo $uId;?>"/>
+							<input type="hidden" class="buyfield" name="productId" value="<?php echo $pId;?>"/>
+							<input type="submit" class="buysubmit" name="compare" value="Vergelijk"/>	
+						</form>	
+					</div>
+					<?php 
+					
+					if ($loggedIn){ // alleen zichtbaar als ingelogd
+						$checkWens = $pd->checkWens($pId, $uId);
+						if ($checkWens){
+							$wensBtnNaam = 'delWish'; 
+							$wensBtnTekst = 'Verwijder van wenslijst';
+						} else {
+							$wensBtnNaam = 'addWish'; 
+							$wensBtnTekst = 'Voeg toe aan wenslijst';
+						}
+					?>
+					<div class="btn-container">
+						<form action=" " method="post">
+							<input type="hidden" class="buyfield" name="userId" value="<?php echo $uId;?>"/>
+							<input type="hidden" class="buyfield" name="productId" value="<?php echo $pId;?>"/>
+							<input type="submit" class="buysubmit" name="<?php echo $wensBtnNaam;?>" value="<?php echo $wensBtnTekst;?>"/>	
+						</form>	
+					</div>
+					<?php } ?>
 				</div>
 			</div>	
 			<div class="product-desc">

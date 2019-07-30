@@ -63,7 +63,8 @@ if (isset($_GET['prodDel'])) {
 						echo "General";
 					}
 						?></td>
-					<td><a href="productEdit?pId=<?php echo $result['productId'];?>">Edit</a> || <a onclick="return confirm('Weet je het zeker?')" href="?prodDel=<?php echo $result['productId'];?>">Delete</a></td>
+					<td><a href="productEdit?pId=<?php echo $result['productId'];?>">Edit</a> || 
+					<a onclick="return confirm('Weet je het zeker?')" href="?prodDel=<?php echo $result['productId'];?>">Delete</a></td>
 				</tr>
 					<?php }} ?>
 			</tbody>

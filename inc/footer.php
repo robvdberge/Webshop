@@ -40,17 +40,30 @@
                 <div class="social-icons">
                     <h4>Volg ons op Social Media</h4>
                     <ul>
-                        <li class="facebook"><a href="#" target="_blank"> </a></li>
-                        <li class="twitter"><a href="#" target="_blank"> </a></li>
-                        <li class="googleplus"><a href="#" target="_blank"> </a></li>
-                        <li class="contact"><a href="#" target="_blank"> </a></li>
+                    <?php 
+                    $socialLinks = $bd->getSocialLinks();
+                    if ( $socialLinks ){
+                        while ( $result = $socialLinks->fetch_assoc()){ ?> 
+                        <li class="facebook"><a href="<?php echo $result['facebook']?>" target="_blank"> </a></li>
+                        <li class="twitter"><a href="<?php echo $result['twitter']?>" target="_blank"> </a></li>
+                        <li class="linkedin"><a href="<?php echo $result['linkedin']?>" target="_blank"> </a></li>
+                        <li class="contact"><a href="<?php echo $result['google']?>" target="_blank"> </a></li>
                         <div class="clear"></div>
+                    <?php }} ?>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="copy_right">
-            <p>easy Learning project &amp; All rights Reseverd </p>
+            <p><?php
+            $copyrightTekst = $bd->getCopyright();
+            if ($copyrightTekst){
+                while ( $result = $copyrightTekst->fetch_assoc() ){
+                   echo $result['tekst']; 
+                }
+            }
+            ?>
+            </p>
         </div>
      </div>
 </div>

@@ -597,6 +597,10 @@ p.note{
 	color:#602D8D;
 	text-decoration:underline;
 }
+/**** Slider images *****/
+.sliderImage{
+	max-height: 200px;
+}
 /**** Grid 1_0f_4 ****/
 .grid_1_of_4{
 	display: block;
@@ -786,6 +790,14 @@ p.note{
     display:inline-block;
 	cursor:pointer;
 }
+.social-icons li a{
+	width: 25px;
+	height: 25px;
+	padding: 0px 0 0 0px;
+	margin: 0;
+    display:inline-block;
+	cursor:pointer;
+}
 .social-icons li.facebook {
 	background:url(../images/icon-2.png) no-repeat 0px  -29px;
 }
@@ -809,6 +821,13 @@ p.note{
 }
 .social-icons li.contact:hover {
 	background:url(../images/icon-1.png) no-repeat 0px  0px;
+}
+.social-icons li.linkedin {
+	background:url(../images/linkedin.png) no-repeat 0px  0px;
+}
+.social-icons li.linkedin:hover {
+	background:url(../images/linkedin.png) no-repeat 0px  0px;
+	opacity: .8;
 }
  .copy_right{
 	text-align:center;
@@ -1212,6 +1231,7 @@ p.note{
 	color: #666;
 	font-family : Arial, Helvetica, sans-serif;
 }
+
 /*  About  ============================================================================= */
 .col_1_of_3{
 	display: block;
@@ -1746,8 +1766,8 @@ p.terms {
     	font-size:1em;
     	letter-spacing:0;
     }
-    .social-icons li {
-    	padding:0 0 0 4px;
+    .social-icons li a{
+    	padding: 5p 5px;
     }
     .span_1_of_2{
     	float:inherit;

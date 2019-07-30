@@ -2,7 +2,7 @@
     <div class="header_bottom_left">
         <div class="section group">
             <?php 
-            $getBrands = array('Acer', 'Samsung', 'Apple', 'Nikon');
+            $getBrands = array('Acer', 'Samsung', 'Apple', 'Nikon'); // kies 4 merken!!!
             for ( $i = 0; $i < 4; $i++){
                 $getLatestBrand = $pd->getLatestSingle($getBrands[$i]);
                 if ( $getLatestBrand ){
@@ -36,10 +36,15 @@
         <section class="slider">
                 <div class="flexslider">
                 <ul class="slides">
-                    <li><img src="images/1.jpg" alt=""/></li>
-                    <li><img src="images/2.jpg" alt=""/></li>
-                    <li><img src="images/3.jpg" alt=""/></li>
-                    <li><img src="images/4.jpg" alt=""/></li>
+                <?php 
+                    $getSlides = $bd->getSliderImages();
+                    if ($getSlides){
+                        while ($result = $getSlides->fetch_assoc() ){
+
+                ?>
+                    <li><img src="<?php echo 'admin/' . $result['image'];?>" alt="<?php echo $result['title'];?>" class="sliderImage"/></li>
+
+                <?php }} ?>
                 </ul>
                 </div>
         </section>
