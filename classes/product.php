@@ -209,13 +209,13 @@ class Product{
         return $result;
     }
 
-    public function getLatestProd()
+    public function getLatestProd($qty = 4)
     {
         $query = "SELECT * 
         FROM tbl_product 
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
         LEFT JOIN tbl_brand on tbl_product.brandId = tbl_brand.brandId 
-        ORDER BY productId DESC LIMIT 4";
+        ORDER BY productId DESC LIMIT $qty";
 
         $result = $this->db->select($query);
         return $result;
@@ -228,6 +228,17 @@ class Product{
         LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
         LEFT JOIN tbl_brand on tbl_product.brandId = tbl_brand.brandId 
         WHERE productId = '$id'";
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getCidByPid($pId)
+    {
+        $query = "SELECT tbl_product.*, tbl_category.catName 
+        FROM tbl_product 
+        LEFT JOIN tbl_category on tbl_product.catId = tbl_category.catId 
+        WHERE productId = '$pId'";
 
         $result = $this->db->select($query);
         return $result;

@@ -4,13 +4,13 @@ ul.dc_mm-orange,ul.dc_mm-orange li{
 	list-style:none;
 }
 ul.dc_mm-orange{
-	background: #414045; 
-	background: -moz-linear-gradient(top,  #414045 55%, #2f2e33 100%); 
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(55%,#414045), color-stop(100%,#2f2e33));
-	background: -webkit-linear-gradient(top,  #414045 55%,#2f2e33 100%); 
-	background: -o-linear-gradient(top,  #414045 55%,#2f2e33 100%); 
-	background: -ms-linear-gradient(top,  #414045 55%,#2f2e33 100%); 
-	background: linear-gradient(to bottom,  #414045 55%,#2f2e33 100%); 
+	background: #96949c; 
+	background: -moz-linear-gradient(top,  #737179 55%, #44424d 100%); 
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(55%,#737179), color-stop(100%,#37363d));
+	background: -webkit-linear-gradient(top,  #737179 55%, #37363d 100%); 
+	background: -o-linear-gradient(top,  #737179 55%, #37363d 100%); 
+	background: -ms-linear-gradient(top,  #737179 55%, #37363d 100%); 
+	background: linear-gradient(top,  #737179 55%, #37363d 100%); 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#414045', endColorstr='#2f2e33',GradientType=0 );
 	font:normal 13px Arial,sans-serif;
 	padding:0;
@@ -41,7 +41,7 @@ ul.dc_mm-orange li a{
 	text-shadow:1px 1px 1px #000;
 	text-transform:uppercase;
 	font-family:'Doppio One', sans-serif;
-	border-left:2px groove #636363;
+	border-left:2px groove #979797;
 }
 ul.dc_mm-orange li a.dc-mega{
 	position:relative;
@@ -58,10 +58,10 @@ ul.dc_mm-orange li a .dc-mega-icon{
 ul.dc_mm-orange li.mega-hover a,ul.dc_mm-orange li a:hover{
 	color: #FFF;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70389c',endColorstr='#602d8d');
-	background: -webkit-gradient(linear,left top,left bottom,from(#70389C),to(#602D8D));
-	background: -moz-linear-gradient(top,#70389C,#602D8D);
-	background: -o-linear-gradient(top,#70389C,#602D8D);
-	background: -ms-linear-gradient(top,#70389C,#602D8D);
+	background: -webkit-gradient(linear,left top,left bottom,from(rgb(63, 62, 143)),to(rgb(55, 129, 172)));
+	background: -moz-linear-gradient(top,rgb(63, 62, 143),rgb(55, 129, 172));
+	background: -o-linear-gradient(top,rgb(63, 62, 143),rgb(55, 129, 172));
+	background: -ms-linear-gradient(top,rgb(63, 62, 143),rgb(55, 129, 172));
 }
 ul.dc_mm-orange li .sub-container{
 	background:#F0F0F0;

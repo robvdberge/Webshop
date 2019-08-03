@@ -1,7 +1,7 @@
 <?php include './inc/header.php'; ?>
 <?php include './inc/slider.php'; ?>
 
- <div class="main">
+<div class="main">
     <div class="content">
     	<div class="content_top">
     		<div class="heading">
@@ -20,7 +20,7 @@
 					 <a href="preview.php?pId=<?php echo $result['productId'];?>">
 					 <img src="<?php echo "admin/" . $result['image']; ?>" alt="" height="250px" /></a>
 					 <h2><?php echo $result['productName']; ?></h2>
-					 <p><?php echo $fm->textShorten($result['body'],60); ?></p>
+					 <p><?php echo $fm->textShorten($result['body'],90); ?></p>
 					 <p><span class="price"><?php echo '€' . $result['price']; ?></span></p>
 				     <div class="button"><span><a href="preview.php?pId=<?php echo $result['productId'];?>" class="details">Details</a></span></div>
 				</div>
@@ -28,7 +28,7 @@
 			</div>
 			<div class="content_bottom">
     		<div class="heading">
-    		<h3>Nieuwe Producten</h3>
+    		<h3>Nieuwste Producten</h3>
     		</div>
     		<div class="clear"></div>
     	</div>

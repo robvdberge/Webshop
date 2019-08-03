@@ -25,18 +25,18 @@ if ( !isset( $_GET['id'] ) ){
     	<div class="content">
     		<div class="cartoption">		
 				<div class="cartpage">
-					<h2>Your Cart</h2>
+					<h2>Winkelwagen</h2>
 					<?php if (isset($updateCart)){echo $updateCart;} // melding bij updateQty in cart?>
 					<?php if (isset($cartDelItem)){echo $cartDelItem;} // melding bij verwijdering uit cart?>
 						<table class="tblone">
 							<tr>
 								<th width="5%">Nr</th>
-								<th width="30%">Product Name</th>
-								<th width="10%">Image</th>
-								<th width="10%">Price</th>
-								<th width="15%">Qty</th>
-								<th width="20%">Total Price</th>
-								<th width="10%">Action</th>
+								<th width="30%">Product Naam</th>
+								<th width="10%">Afbeelding</th>
+								<th width="10%">Prijs</th>
+								<th width="15%">Aantal</th>
+								<th width="20%">Totaal</th>
+								<th width="10%">Actie</th>
 							</tr>
 							<?php
 								global $total ;
@@ -61,14 +61,14 @@ if ( !isset( $_GET['id'] ) ){
 									</form>
 								</td>
 								<td>
-									<?php echo '€ ' . $subTotal = $fillCart['qty'] * $fillCart['price']; ?>
+									€ <?php printf("%.2f", $subTotal = $fillCart['qty'] * $fillCart['price']); ?>
 								</td>
 								<td><a onclick="return confirm('Weet je het zeker?');" href="?delCartItem=<?php echo $fillCart['cartId'];?>">delete</a></td>
 							</tr>
 							<?php 
 								$qty += $fillCart['qty'];
 								$total += $subTotal;
-								$totalCart = $total + round($total * 0.21, 2); // geef totaalprijs in winkelwagen + btw
+								$totalCart = round($total, 2); // geef totaalprijs in winkelwagen + btw
 
 								Session::set('total', $totalCart); // is prijs inclusief btw
 								Session::set('qty', $qty);
@@ -82,17 +82,14 @@ if ( !isset( $_GET['id'] ) ){
 						?>
 						<table style="float:right;text-align:left;" width="40%">
 							<tr>
-								<th>Sub Total : </th>
-								<td>€ <?php echo $total;?></td>
+								<th>Totaalprijs : </th>
+								<td>€ <?php printf("%.2f", $total);?></td>
 							</tr>
 							<tr>
 								<th>BTW (21%) : </th>
-								<td>€ <?php echo $btw = round($total  * 0.21, 2);?></td>
+								<td>€ <?php printf("%.2f", $btw = round($total  * 0.21, 2));?></td>
 							</tr>
-							<tr>
-								<th>Grand Total :</th>
-								<td>€ <?php echo $grandTotal = $total + $btw;?></td>
-							</tr>
+							
 						</table>
 						<?php
 							} else {

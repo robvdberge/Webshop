@@ -6,7 +6,6 @@
                 <ul>
                 <li><a href="about.php">Over Ons</a></li>
                 <li><a href="faq.php">Klantenservice</a></li>
-                <li><a href="#"><span>Uitgebreid Zoeken</span></a></li>
                 <li><a href="faq.php">Bestellingen en teruggave</a></li>
                 <li><a href="contact.php"><span>Neem contact met ons op</span></a></li>
                 </ul>
@@ -34,8 +33,7 @@
             <div class="col_1_of_4 span_1_of_4">
                 <h4>Contact</h4>
                 <ul>
-                    <li><span>support@easylearningbd.com</span></li>
-                    <li><span>www.easylearningbd.com</span></li>
+                    <li><a href="contact.php"><span>Neem contact met ons op</span></a></li>
                 </ul>
                 <div class="social-icons">
                     <h4>Volg ons op Social Media</h4>

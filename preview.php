@@ -1,10 +1,14 @@
-<?php include './inc/header.php';
-
+<?php 
+include './inc/header.php';
+$bcArray = ['Producten'=>'products.php'];
 if ( !isset($_GET['pId']) || $_GET['pId'] == NULL ){
     echo '<script>window.location = "404.php" </script>';
 } else{
     $pId = $_GET['pId']; // declare ProductId
 }
+include './inc/breadcrumb.php';
+
+
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['quantity']) ){
 	$quantity = $_POST['quantity'];
@@ -59,16 +63,16 @@ $loggedIn = Session::get('userLogin'); // Kijk if er is ingelogd
 
 			?>
 				<div class="cont-desc span_1_of_2">				
-					<div class="grid images_3_of_2">
+					<div class="grid images_2_of_2">
 						<img src="<?php echo "admin/" . $result['image']; ?>" alt="" />
 					</div>
-				<div class="desc span_3_of_2">
+				<div class="desc span_1_of_2">
 					<h2><?php echo $result['productName']; ?></h2>
 					<p><?php echo $fm->textShorten($result['body'],200); ?></p>					
 					<div class="price">
-						<p>Price: <span class="price"><?php echo '€' . $result['price']; ?></span></p>
-						<p>Category: <span class="price"><?php echo $result['catName']; ?></span></p>
-						<p>Brand:<span class="price"><?php echo $result['brandName']; ?></span></p>
+						<p>Merk: <span class="price"><?php echo $result['brandName']; ?></span></p>
+						<p>Categorie: <span class="price"><?php echo $result['catName']; ?></span></p>
+						<p>Prijs: <span class="price"><?php echo '€' . $result['price']; ?></span></p>
 					</div>
 				<div class="add-cart">
 					<form action=" " method="post">

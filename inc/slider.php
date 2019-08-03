@@ -15,7 +15,7 @@
                             <div class="text list_2_of_1">
                                 <h2><?php echo $result['brandName'];?></h2>
                                 <p><?php echo $fm->textShorten($result['productName'], 45);?><p>
-                                <div class="button"><span><a href="preview.php?pId=<?php echo $result['productId'];?>">Add to cart</a></span></div>
+                                <div class="button"><span><a href="preview.php?pId=<?php echo $result['productId'];?>">Bekijk</a></span></div>
                             </div>
                         </div>		
                         <?php 

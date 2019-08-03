@@ -73,7 +73,9 @@ if (!$uId = Session::get('userId')){
                             if ( $checkCart ){
                                 $som = Session::get('total');
                                 $qty = Session::get('qty');
-                                echo "€ " . $som . " Stuks: " . $qty; 
+                                echo "€ ";
+                                printf("%.2f", $som);
+                                echo " Stuks: " . $qty; 
                             } else { 
                                 echo "(empty)";
                             }
@@ -83,9 +85,9 @@ if (!$uId = Session::get('userId')){
                 </div>
             </div>
             <?php if ( !$loggedIn ){ ?>
-                <div class="login"><a href="login.php">Login</a>
+                <div class="login"><a href="login.php"><img src="images/login.png" alt=""><span>Inloggen</span></a>
             <?php } else { ?>
-                <div class="login"><a href="?uId=<?php echo Session::get('userId');?>">Logout</a>
+                <div class="login"><a href="?uId=<?php echo Session::get('userId');?>"><img src="images/login.png" alt="">Uitloggen</a>
             <?php } ?>
             </div>
             <div class="clear">
@@ -133,3 +135,4 @@ if (!$uId = Session::get('userId')){
         $pd->clearComp();     // verwijder alle data in de vergelijklijst
         Session::destroy();
     }?>
+    
